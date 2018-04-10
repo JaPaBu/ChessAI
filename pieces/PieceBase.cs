@@ -24,5 +24,11 @@ internal abstract class PieceBase
 
         this._initialized = true;
     }
+
+    public virtual void Move(int x, int y)
+    {
+        this.X = x;
+        this.Y = y;
+    }
     public abstract List<MoveBase> ListMoves(ChessBoard board);
 }

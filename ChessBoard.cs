@@ -49,6 +49,23 @@ internal sealed class ChessBoard
         _board[x, y] = null;
     }
 
+    public void MovePiece(PieceBase piece, int x, int y)
+    {
+        CheckPositionBounds(x, y);
+
+        if (_board[piece.X, piece.Y] != piece) throw new Exception("Piece is not where it should be!");
+        if (_board[piece.X, piece.Y] != null) throw new Exception("Cant move because there is already a piece!");
+
+        piece.Move(x, y);
+        _board[x, y] = piece;
+    }
+
+    public bool IsFree(int x, int y)
+    {
+        CheckPositionBounds(x, y);
+        return _board[x, y] == null;
+    }
+
     public void SetTurn(PieceColor turn) => Turn = turn;
 
     public List<MoveBase> ListMoves(PieceColor color)
