@@ -59,7 +59,7 @@ internal sealed class ChessBoard
             for (var y = 0; y < Height; y++)
             {
                 var piece = _board[x, y];
-                if (piece == null) continue;
+                if (piece == null && piece.Color == color) continue;
 
                 moves.AddRange(piece.ListMoves(this));
             }
