@@ -1,4 +1,4 @@
-internal sealed class MoveMove : MoveBase
+internal class MoveMove : MoveBase
 {
     public readonly int DestX;
     public readonly int DestY;

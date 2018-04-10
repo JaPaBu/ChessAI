@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 internal sealed class ChessBoard
 {
-    private readonly PieceBase[,] _board;
+    public readonly PieceBase[,] Pieces;
 
     public readonly int Width;
     public readonly int Height;
@@ -15,55 +15,53 @@ internal sealed class ChessBoard
     {
         this.Width = width;
         this.Height = height;
-        _board = new PieceBase[width, height];
+        Pieces = new PieceBase[width, height];
     }
 
-    private void CheckPositionBounds(int x, int y)
+    private void EnsurePositionBounds(int x, int y)
     {
-        if (x < 0 || x >= Width || y < 0 || y >= Width)
+        if (!IsInBounds(x, y))
             throw new Exception("Position out of bounds!");
     }
+
+    public bool IsInBounds(int x, int y) => x >= 0 && x < Width && y >= 0 && y < Height;
     public PieceBase GetPiece(int x, int y)
     {
-        CheckPositionBounds(x, y);
-        return _board[x, y];
+        EnsurePositionBounds(x, y);
+        return Pieces[x, y];
     }
 
-    public void SetPiece<T>(PieceColor color, int x, int y) where T : PieceBase, new()
+    public void AddPiece(PieceBase piece)
     {
-        CheckPositionBounds(x, y);
+        EnsurePositionBounds(piece.X, piece.Y);
 
-        if (_board[x, y] != null) throw new Exception("There is already a piece!");
-
-        var piece = new T();
-        piece.Init(color, x, y);
-
-        _board[x, y] = piece;
+        if (Pieces[piece.X, piece.Y] != null) throw new Exception("There is already a piece!");
+        Pieces[piece.X, piece.Y] = piece;
     }
 
-    public void RemovePiece(int x, int y)
+    public void RemovePiece(PieceBase piece)
     {
-        CheckPositionBounds(x, y);
+        EnsurePositionBounds(piece.X, piece.Y);
 
-        if (_board[x, y] == null) throw new Exception("There is no piece!");
-        _board[x, y] = null;
+        if (Pieces[piece.X, piece.Y] == null) throw new Exception("There is no piece!");
+        Pieces[piece.X, piece.Y] = null;
     }
 
     public void MovePiece(PieceBase piece, int x, int y)
     {
-        CheckPositionBounds(x, y);
+        EnsurePositionBounds(x, y);
 
-        if (_board[piece.X, piece.Y] != piece) throw new Exception("Piece is not where it should be!");
-        if (_board[piece.X, piece.Y] != null) throw new Exception("Cant move because there is already a piece!");
+        if (Pieces[piece.X, piece.Y] != piece) throw new Exception("Piece is not where it should be!");
+        if (Pieces[piece.X, piece.Y] != null) throw new Exception("Cant move because there is already a piece!");
 
         piece.Move(x, y);
-        _board[x, y] = piece;
+        Pieces[x, y] = piece;
     }
 
-    public bool IsFree(int x, int y)
+    public bool IsEmpty(int x, int y)
     {
-        CheckPositionBounds(x, y);
-        return _board[x, y] == null;
+        EnsurePositionBounds(x, y);
+        return Pieces[x, y] == null;
     }
 
     public void SetTurn(PieceColor turn) => Turn = turn;
@@ -75,8 +73,8 @@ internal sealed class ChessBoard
         for (var x = 0; x < Width; x++)
             for (var y = 0; y < Height; y++)
             {
-                var piece = _board[x, y];
-                if (piece == null && piece.Color == color) continue;
+                var piece = Pieces[x, y];
+                if (piece == null || piece.Color != color) continue;
 
                 moves.AddRange(piece.ListMoves(this));
             }

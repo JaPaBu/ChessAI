@@ -7,11 +7,11 @@ namespace ChessAI
     {
         static void Main(string[] args)
         {
-            ChessBoard board = ChessGenerator.Test();
+            ChessBoard board = ChessGenerator.Classic();
 
             var moves = board.ListMoves(PieceColor.White);
 
-            moves = moves.FindAll(move => move.Piece is PieceBishop);
+            moves = moves.FindAll(move => move.Piece is PiecePawn);
 
             Console.WriteLine("Hello World!");
         }

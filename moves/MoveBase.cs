@@ -7,6 +7,10 @@ internal abstract class MoveBase
         this.Piece = piece;
     }
 
+    public virtual void Perform(ChessBoard board)
+    {
+        foreach (var otherPiece in board.Pieces)
+            if (otherPiece != this.Piece) otherPiece.OtherMoved(this.Piece, this);
+    }
     public abstract bool Validate(ChessBoard board);
-    public abstract void Perform(ChessBoard board);
 }
