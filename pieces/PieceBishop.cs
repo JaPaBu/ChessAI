@@ -16,7 +16,7 @@ internal sealed class PieceBishop : PieceBase
         while (i >= 0 && o < 8)
         {
             moves.Add(new MoveMove(this, i, o));
-            if (board.GetPiece(i, o) != null) break;
+            if (!board.IsEmpty(i, o)) break;
             i--;
             o++;
         }
@@ -27,7 +27,7 @@ internal sealed class PieceBishop : PieceBase
         while (i >= 0 && o >= 0)
         {
             moves.Add(new MoveMove(this, i, o));
-            if (board.GetPiece(i, o) != null) break;
+            if (!board.IsEmpty(i, o)) break;
             i--;
             o--;
         }
@@ -38,7 +38,7 @@ internal sealed class PieceBishop : PieceBase
         while (i < 8 && o >= 0)
         {
             moves.Add(new MoveMove(this, i, o));
-            if (board.GetPiece(i, o) != null) break;
+            if (!board.IsEmpty(i, o)) break;
             i++;
             o--;
         }
@@ -49,7 +49,7 @@ internal sealed class PieceBishop : PieceBase
         while (i < 8 && o < 8)
         {
             moves.Add(new MoveMove(this, i, o));
-            if (board.GetPiece(i, o) != null) break;
+            if (!board.IsEmpty(i, o)) break;
             i++;
             o++;
         }

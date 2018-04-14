@@ -9,6 +9,13 @@ internal sealed class PieceQueen : PieceBase
     public override List<MoveBase> ListMoves(ChessBoard board)
     {
         var moves = new List<MoveBase>();
+
+        var rook = new PieceRook(this.Color, this.X, this.Y);
+        moves.AddRange(rook.ListMoves(board));
+
+        var bishop = new PieceBishop(this.Color, this.X, this.Y);
+        moves.AddRange(bishop.ListMoves(board));
+
         return moves;
     }
 }

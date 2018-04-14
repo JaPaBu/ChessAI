@@ -10,6 +10,17 @@ internal sealed class PieceKing : PieceBase
     public override List<MoveBase> ListMoves(ChessBoard board)
     {
         var moves = new List<MoveBase>();
+
+        moves.Add(new MoveMove(this, this.X + 1, this.Y));
+        moves.Add(new MoveMove(this, this.X - 1, this.Y));
+        moves.Add(new MoveMove(this, this.X, this.Y + 1));
+        moves.Add(new MoveMove(this, this.X, this.Y - 1));
+
+        moves.Add(new MoveMove(this, this.X + 1, this.Y + 1));
+        moves.Add(new MoveMove(this, this.X - 1, this.Y + 1));
+        moves.Add(new MoveMove(this, this.X + 1, this.Y - 1));
+        moves.Add(new MoveMove(this, this.X - 1, this.Y - 1));
+
         return moves;
     }
 }

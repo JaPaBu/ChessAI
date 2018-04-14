@@ -7,6 +7,8 @@ namespace ChessAI
     {
         static void Main(string[] args)
         {
+            Tests.RunAllTests();
+
             ChessBoard board = ChessGenerator.Classic();
 
             var moves = board.ListMoves(PieceColor.White);

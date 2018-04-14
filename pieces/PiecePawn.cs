@@ -3,7 +3,7 @@ using System.Collections.Generic;
 internal sealed class PiecePawn : PieceBase
 {
     public bool EnPassantAvailable = false;
-    private bool _hasMoved = false;
+    public bool HasMoved = false;
     private Direction _dir;
 
     public PiecePawn(PieceColor color, int x, int y, Direction dir) : base(color, x, y)
@@ -13,7 +13,7 @@ internal sealed class PiecePawn : PieceBase
 
     public override void Move(int x, int y)
     {
-        _hasMoved = true;
+        HasMoved = true;
         base.Move(x, y);
     }
 
@@ -45,7 +45,7 @@ internal sealed class PiecePawn : PieceBase
 
         //Move two forward
         _dir.MoveOne(ref x, ref y);
-        if (board.IsInBounds(x, y) && board.IsEmpty(x, y) && !_hasMoved) AddMoveMove(new MoveDoubleMovePawn(this, x, y));
+        if (board.IsInBounds(x, y) && board.IsEmpty(x, y) && !HasMoved) AddMoveMove(new MoveDoubleMovePawn(this, x, y));
 
         //Take diagonally
         x = this.X;
@@ -66,7 +66,7 @@ internal sealed class PiecePawn : PieceBase
             if (!board.IsInBounds(x, y)) return;
 
             var pawn = board.GetPiece(x, y) as PiecePawn;
-            if (pawn == null || !pawn.EnPassantAvailable) return;
+            if (pawn == null || pawn.Color == this.Color || !pawn.EnPassantAvailable) return;
 
             _dir.MoveOne(ref x, ref y);
             if (!board.IsInBounds(x, y) || !board.IsEmpty(x, y)) return;

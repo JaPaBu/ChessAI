@@ -36,6 +36,7 @@ internal sealed class ChessBoard
         EnsurePositionBounds(piece.X, piece.Y);
 
         if (Pieces[piece.X, piece.Y] != null) throw new Exception("There is already a piece!");
+        piece.Exists = true;
         Pieces[piece.X, piece.Y] = piece;
     }
 
@@ -44,18 +45,20 @@ internal sealed class ChessBoard
         EnsurePositionBounds(piece.X, piece.Y);
 
         if (Pieces[piece.X, piece.Y] == null) throw new Exception("There is no piece!");
+        piece.Exists = false;
         Pieces[piece.X, piece.Y] = null;
     }
 
-    public void MovePiece(PieceBase piece, int x, int y)
+    public void MovePiece(PieceBase piece, int destX, int destY)
     {
-        EnsurePositionBounds(x, y);
+        EnsurePositionBounds(destX, destY);
 
         if (Pieces[piece.X, piece.Y] != piece) throw new Exception("Piece is not where it should be!");
-        if (Pieces[piece.X, piece.Y] != null) throw new Exception("Cant move because there is already a piece!");
+        if (Pieces[destX, destY] != null) throw new Exception("Cant move because there is already a piece!");
 
-        piece.Move(x, y);
-        Pieces[x, y] = piece;
+        RemovePiece(piece);
+        piece.Move(destX, destY);
+        AddPiece(piece);
     }
 
     public bool IsEmpty(int x, int y)
@@ -76,9 +79,9 @@ internal sealed class ChessBoard
                 var piece = Pieces[x, y];
                 if (piece == null || piece.Color != color) continue;
 
-                moves.AddRange(piece.ListMoves(this));
+                moves.AddRange(piece.ListValidatedMoves(this));
             }
 
-        return moves.FindAll(move => move.Validate(this));
+        return moves;
     }
 }
