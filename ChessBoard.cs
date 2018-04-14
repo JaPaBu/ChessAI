@@ -70,6 +70,10 @@ internal sealed class ChessBoard
 
     public List<MoveBase> ListMoves(PieceColor color)
     {
+        //Find out if im in check
+        //Get all moves
+        //Check which moves get me out of check
+
         var moves = new List<MoveBase>();
 
         for (var x = 0; x < Width; x++)

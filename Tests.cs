@@ -7,6 +7,7 @@ internal static class Tests
     {
         TestClassic();
         TestEnpassant();
+        TestCheckCheckCheck();
     }
 
 
@@ -78,6 +79,22 @@ internal static class Tests
         if (blackPawn.Exists) throw new Exception("Black pawn should have been taken!" + blackPawn);
 
         if (board.GetPiece(0, 2) != whitePawn) throw new Exception("White pawn should be at (0,2)!" + blackPawn);
+    }
+
+    private static void TestCheckCheckCheck()
+    {
+        var board = new ChessBoard(1, 4);
+
+        board.AddPiece(new PieceRook(PieceColor.White, 0, 0));
+
+        var blackRook = new PieceRook(PieceColor.Black, 0, 2);
+        board.AddPiece(blackRook);
+        board.AddPiece(new PieceKing(PieceColor.Black, 0, 3));
+
+        var moves = blackRook.ListMoves(board);
+        var valMoves = blackRook.ListValidatedMoves(board);
+
+        while (false) { }
     }
 
     private static bool HasMoveMove(List<MoveBase> list, int srcX, int srcY, int destX, int destY)
