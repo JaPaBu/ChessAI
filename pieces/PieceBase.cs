@@ -20,6 +20,7 @@ internal abstract class PieceBase
 
     public List<MoveBase> ListValidatedMoves(ChessBoard board)
         => ListMoves(board).FindAll(move => move.Validate(board));
+
     public virtual void Move(int x, int y)
     {
         this.X = x;

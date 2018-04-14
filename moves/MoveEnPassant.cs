@@ -11,4 +11,10 @@ internal class MoveEnPassant : MoveMove
         board.RemovePiece(_pawn);
         base.Perform(board);
     }
+
+    public override void Revert(ChessBoard board)
+    {
+        board.AddPiece(_pawn);
+        base.Revert(board);
+    }
 }

@@ -9,4 +9,10 @@ internal class MoveDoubleMovePawn : MoveMove
         ((PiecePawn)this.Piece).EnPassantAvailable = true;
         base.Perform(board);
     }
+
+    public override void Revert(ChessBoard board)
+    {
+        ((PiecePawn)this.Piece).EnPassantAvailable = false;
+        base.Revert(board);
+    }
 }

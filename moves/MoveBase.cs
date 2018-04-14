@@ -12,5 +12,7 @@ internal abstract class MoveBase
         foreach (var otherPiece in board.Pieces)
             if (otherPiece != this.Piece) otherPiece.OtherMoved(this.Piece, this);
     }
+
+    public abstract void Revert(ChessBoard board);
     public abstract bool Validate(ChessBoard board);
 }

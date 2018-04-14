@@ -9,11 +9,17 @@ internal class MovePawnSwitch : MoveMove
 
     public override void Perform(ChessBoard board)
     {
-        //Move
         base.Perform(board);
 
-        //Then replace the piece
         board.RemovePiece(this.Piece);
         board.AddPiece(_replacement);
+    }
+
+    public override void Revert(ChessBoard board)
+    {
+        board.RemovePiece(_replacement);
+        board.AddPiece(this.Piece);
+
+        base.Revert(board);
     }
 }

@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 
@@ -15,7 +14,7 @@ internal sealed class ChessBoard
     {
         this.Width = width;
         this.Height = height;
-        Pieces = new PieceBase[width, height];
+        this.Pieces = new PieceBase[this.Width, this.Height];
     }
 
     private void EnsurePositionBounds(int x, int y)
@@ -83,5 +82,18 @@ internal sealed class ChessBoard
             }
 
         return moves;
+    }
+
+    public bool IsCheck(PieceColor color)
+    {
+        var kings = new List<PieceKing>();
+        foreach (var piece in Pieces)
+            if (piece is PieceKing king) kings.Add(king);
+
+        return kings.Exists(king
+            => new List<PieceColor>((PieceColor[])Enum.GetValues(typeof(PieceColor))).FindAll(c => c != color)
+            .Exists(otherColor
+                => ListMoves(otherColor).FindAll(move => move is MoveMove).ConvertAll<MoveMove>(move => (MoveMove)move)
+                    .Exists(move => move.DestX == king.X && move.DestY == king.Y)));
     }
 }
