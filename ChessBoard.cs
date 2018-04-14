@@ -70,6 +70,7 @@ internal sealed class ChessBoard
 
     public List<MoveBase> ListMoves(PieceColor color)
     {
+        //TODO: Check check is not working redo it
         //Find out if im in check
         //Get all moves
         //Check which moves get me out of check
