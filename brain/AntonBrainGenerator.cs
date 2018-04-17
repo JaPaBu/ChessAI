@@ -6,6 +6,7 @@ internal static class AntonBrainGenerator
     {
         while (true)
         {
+            Chess.play
             //Generate population
             //Evalutate population
             //Set brain via BrainManager.SetBrain(new AntonBrain(weights, someOtherParamterYouCouldNeed, andAnotherOne))
