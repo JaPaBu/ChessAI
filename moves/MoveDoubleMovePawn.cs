@@ -1,4 +1,4 @@
-internal class MoveDoubleMovePawn : MoveMove
+internal class MoveDoubleMovePawn : MoveMovePawn
 {
     public MoveDoubleMovePawn(PiecePawn piece, int destX, int destY) : base(piece, destX, destY)
     {

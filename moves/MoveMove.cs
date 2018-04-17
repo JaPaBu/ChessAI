@@ -15,7 +15,7 @@ internal class MoveMove : MoveBase
         this.DestY = destY;
     }
 
-    public override bool Validate(ChessBoard board)
+    public override bool Validate(ChessBoard board, bool checkCheck)
     {
         if (!board.IsInBounds(this.DestX, this.DestY))
             return false;
@@ -33,7 +33,10 @@ internal class MoveMove : MoveBase
                 return false;
         }
 
+        if (!checkCheck) return true;
+
         var isValid = true;
+
         this.Perform(board);
         if (board.IsCheck(this.Piece.Color)) isValid = false;
         this.Revert(board);

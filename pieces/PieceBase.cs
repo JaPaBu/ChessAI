@@ -10,6 +10,8 @@ internal abstract class PieceBase
 
     public bool Exists = false;
 
+    public abstract string Token { get; }
+
     public virtual bool CanBeTaken { get; } = true;
     public PieceBase(PieceColor color, int x, int y)
     {
@@ -18,10 +20,10 @@ internal abstract class PieceBase
         this.Y = y;
     }
 
-    public List<MoveBase> ListValidatedMoves(ChessBoard board)
-        => ListMoves(board).FindAll(move => move.Validate(board));
+    public List<MoveBase> ListValidatedMoves(ChessBoard board, bool checkCheck = true)
+        => ListMoves(board).FindAll(move => move.Validate(board, checkCheck));
 
-    public virtual void Move(int x, int y)
+    public void Move(int x, int y)
     {
         this.X = x;
         this.Y = y;

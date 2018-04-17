@@ -83,18 +83,24 @@ internal static class Tests
 
     private static void TestCheckCheckCheck()
     {
-        var board = new ChessBoard(1, 4);
+        var board = new ChessBoard(8, 8);
 
-        board.AddPiece(new PieceRook(PieceColor.White, 0, 0));
+        //board.AddPiece(new PieceBishop(PieceColor.Black, 0, 0));
+        board.AddPiece(new PieceQueen(PieceColor.Black, 6, 6));
 
-        var blackRook = new PieceRook(PieceColor.Black, 0, 2);
-        board.AddPiece(blackRook);
-        board.AddPiece(new PieceKing(PieceColor.Black, 0, 3));
+        var whiteKing = new PieceKing(PieceColor.White, 7, 7);
+        board.AddPiece(whiteKing);
 
-        var moves = blackRook.ListMoves(board);
-        var valMoves = blackRook.ListValidatedMoves(board);
+        var moves = whiteKing.ListValidatedMoves(board);
 
-        while (false) { }
+        if (board.IsCheckMate(PieceColor.White))
+            Console.WriteLine("Checkmate");
+        else if (board.IsPatt(PieceColor.White))
+            Console.WriteLine("Patt");
+        else
+            Console.WriteLine("King can move " + moves);
+
+        board.Print();
     }
 
     private static bool HasMoveMove(List<MoveBase> list, int srcX, int srcY, int destX, int destY)

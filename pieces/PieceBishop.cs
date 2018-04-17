@@ -6,6 +6,8 @@ internal sealed class PieceBishop : PieceBase
     {
     }
 
+    public override string Token => "b";
+
     public override List<MoveBase> ListMoves(ChessBoard board)
     {
         var moves = new List<MoveBase>();

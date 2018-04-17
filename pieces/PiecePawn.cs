@@ -6,15 +6,10 @@ internal sealed class PiecePawn : PieceBase
     public bool HasMoved = false;
     private Direction _dir;
 
+    public override string Token => "p";
     public PiecePawn(PieceColor color, int x, int y, Direction dir) : base(color, x, y)
     {
         this._dir = dir;
-    }
-
-    public override void Move(int x, int y)
-    {
-        HasMoved = true;
-        base.Move(x, y);
     }
 
     public override void OtherMoved(PieceBase piece, MoveBase move)
@@ -30,7 +25,7 @@ internal sealed class PiecePawn : PieceBase
         var y = this.Y;
 
         //Every move is able to replace pawn with other piece
-        void AddMoveMove(MoveMove move)
+        void AddMoveMove(MoveMovePawn move)
         {
             var xx = move.DestX;
             var yy = move.DestY;
@@ -41,7 +36,7 @@ internal sealed class PiecePawn : PieceBase
 
         //Move one forward
         _dir.MoveOne(ref x, ref y);
-        if (board.IsInBounds(x, y) && board.IsEmpty(x, y)) AddMoveMove(new MoveMove(this, x, y));
+        if (board.IsInBounds(x, y) && board.IsEmpty(x, y)) AddMoveMove(new MoveMovePawn(this, x, y));
 
         //Move two forward
         _dir.MoveOne(ref x, ref y);
@@ -52,10 +47,10 @@ internal sealed class PiecePawn : PieceBase
         y = this.Y;
         _dir.MoveOne(ref x, ref y);
         _dir.Perpendicular.MoveOne(ref x, ref y);
-        if (board.IsInBounds(x, y) && !board.IsEmpty(x, y)) AddMoveMove(new MoveMove(this, x, y));
+        if (board.IsInBounds(x, y) && !board.IsEmpty(x, y)) AddMoveMove(new MoveMovePawn(this, x, y));
 
         _dir.Perpendicular.Opposite.Move(ref x, ref y, 2);
-        if (board.IsInBounds(x, y) && !board.IsEmpty(x, y)) AddMoveMove(new MoveMove(this, x, y));
+        if (board.IsInBounds(x, y) && !board.IsEmpty(x, y)) AddMoveMove(new MoveMovePawn(this, x, y));
 
         //En passant
         void AddEnPassant(Direction dir)

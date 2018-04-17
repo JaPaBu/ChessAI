@@ -14,5 +14,5 @@ internal abstract class MoveBase
     }
 
     public abstract void Revert(ChessBoard board);
-    public abstract bool Validate(ChessBoard board);
+    public abstract bool Validate(ChessBoard board, bool checkCheck);
 }

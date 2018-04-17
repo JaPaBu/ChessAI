@@ -68,13 +68,8 @@ internal sealed class ChessBoard
 
     public void SetTurn(PieceColor turn) => Turn = turn;
 
-    public List<MoveBase> ListMoves(PieceColor color)
+    public List<MoveBase> ListMoves(PieceColor color, bool checkCheck = true)
     {
-        //TODO: Check check is not working redo it
-        //Find out if im in check
-        //Get all moves
-        //Check which moves get me out of check
-
         var moves = new List<MoveBase>();
 
         for (var x = 0; x < Width; x++)
@@ -83,7 +78,7 @@ internal sealed class ChessBoard
                 var piece = Pieces[x, y];
                 if (piece == null || piece.Color != color) continue;
 
-                moves.AddRange(piece.ListValidatedMoves(this));
+                moves.AddRange(piece.ListValidatedMoves(this, checkCheck));
             }
 
         return moves;
@@ -96,9 +91,37 @@ internal sealed class ChessBoard
             if (piece is PieceKing king) kings.Add(king);
 
         return kings.Exists(king
-            => new List<PieceColor>((PieceColor[])Enum.GetValues(typeof(PieceColor))).FindAll(c => c != color)
+            => PieceColor.Colors.FindAll(c => c != color)
             .Exists(otherColor
-                => ListMoves(otherColor).FindAll(move => move is MoveMove).ConvertAll<MoveMove>(move => (MoveMove)move)
+                => ListMoves(otherColor, false).FindAll(move => move is MoveMove).ConvertAll<MoveMove>(move => (MoveMove)move)
                     .Exists(move => move.DestX == king.X && move.DestY == king.Y)));
+    }
+
+    public bool IsCheckMate(PieceColor color)
+    {
+        return ListMoves(color).Count <= 0 && IsCheck(color);
+    }
+
+    public bool IsPatt(PieceColor color)
+    {
+        return ListMoves(color).Count <= 0 && !IsCheck(color);
+    }
+
+    public void Print()
+    {
+        var oldColor = Console.ForegroundColor;
+        for (var y = Height - 1; y >= 0; y--)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                var piece = GetPiece(x, y);
+                Console.ForegroundColor = piece?.Color?.ConsoleColor ?? ConsoleColor.Gray;
+                Console.Write(piece?.Token ?? "x");
+            }
+            Console.WriteLine();
+        }
+
+        Console.ForegroundColor = oldColor;
+        Console.WriteLine();
     }
 }

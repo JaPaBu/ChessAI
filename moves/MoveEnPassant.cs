@@ -1,7 +1,7 @@
-internal class MoveEnPassant : MoveMove
+internal class MoveEnPassant : MoveMovePawn
 {
     private readonly PiecePawn _pawn;
-    public MoveEnPassant(PieceBase piece, int destX, int destY, PiecePawn pawn) : base(piece, destX, destY)
+    public MoveEnPassant(PiecePawn piece, int destX, int destY, PiecePawn pawn) : base(piece, destX, destY)
     {
         this._pawn = pawn;
     }

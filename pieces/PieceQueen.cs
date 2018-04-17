@@ -5,6 +5,7 @@ internal sealed class PieceQueen : PieceBase
     public PieceQueen(PieceColor color, int x, int y) : base(color, x, y)
     {
     }
+    public override string Token => "q";
 
     public override List<MoveBase> ListMoves(ChessBoard board)
     {
